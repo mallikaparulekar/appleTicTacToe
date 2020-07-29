@@ -3,7 +3,7 @@ def createBoard(n):
     return [[(i+1 + j*n) for i in range (n)]for j in range(n)]
 
 #print(createBoard(3))
-
+    
 #input is the n by n array, output is printed on the console.
 def displayBoard(boardArr):
     for i in range(len(boardArr)):
@@ -20,6 +20,17 @@ def displayBoard(boardArr):
 board = createBoard(3)
 displayBoard(board)
 
+#Function to determine if there is a winner yet
+def isWinner(bo, le):
+    # Given a board and a player’s letter, this function returns True if that player has won.
+    return ((bo[0][0] == le and bo[0][1] == le and bo[0][2] == le) or # across the top
+    (bo[1][0] == le and bo[1][1] == le and bo[1][2] == le) or # across the middle
+    (bo[2][0] == le and bo[2][1] == le and bo[2][2] == le) or # across the bottom
+    (bo[2][0] == le and bo[1][0] == le and bo[0][0] == le) or # down the left side
+    (bo[2][1] == le and bo[1][1] == le and bo[0][1] == le) or # down the middle
+    (bo[2][2] == le and bo[1][2] == le and bo[0][2] == le) or # down the right side
+    (bo[2][0] == le and bo[1][1] == le and bo[0][2] == le) or # diagonal
+    (bo[2][2] == le and bo[1][1] == le and bo[0][0] == le)) # diagonal
 
 #For now assuming + is cross and o is nought. Alternates inputs, plays up to 9 moves
 i = 0
@@ -32,13 +43,12 @@ while(i < 9):
         board[int((move-1)/3)][(move-1)%3] = "+"
     else:
         board[int((move-1)/3)][(move-1)%3] = "o"
-
+    if i>=4:
+        if isWinner(board, "+"):
+            print("player 1 is the winner!")
+            i = 10
+        elif isWinner(board, "o"):
+            print("player 2 is the winner!")
+            i = 10
     displayBoard(board)
     i+=1
-
-
-
-
-
-
-
