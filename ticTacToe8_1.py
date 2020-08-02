@@ -85,13 +85,15 @@ def isWinnerThreeByThree(bo, le):
 #For now assuming + is cross and o is nought. Alternates inputs, plays up to 9 moves
 def isOccupied(board, pos):
     n = len(board)
-    return (board[int((pos-1)/n)][(pos-1)%n] == "+" or (board[int((pos-1)/n)][(pos-1)%n] == "o"))
+    return (board[int((pos-1)/n)][(pos-1)%n] == player2Input or (board[int((pos-1)/n)][(pos-1)%n] == player1Input))
 
 ############ THE ACTUAL GAME
 totalGameCount =  int(input("How many games would you like to play? Best of ________ (pick an odd number!)"))
 majority = int(totalGameCount/2)+1
 player1Wins = 0
 player2Wins = 0
+player1Input = str(input("Player one what chatacter would you like to be?"))
+player2Input = str(input("Player two what chatacter would you like to be?"))
 dimension = int(input("What board dimension would you like? For example, if you want a 3 by 3, enter 3!"))
 
 
@@ -112,21 +114,21 @@ while(player1Wins < majority and player2Wins < majority):
                 #decrements so it's their move again!
                 i -= 1
             else:
-                board[int((move-1)/dimension)][(move-1)%dimension] = "+"
+                board[int((move-1)/dimension)][(move-1)%dimension] = player2Input
         else:
             if(isOccupied(board, move)):
                 print("that position is already occupied, try again!")
                 #decrements so it's their move again!
                 i -= 1
             else:
-                board[int((move-1)/dimension)][(move-1)%dimension] = "o"
+                board[int((move-1)/dimension)][(move-1)%dimension] = player1Input
         #print("i", i)
         if i>= (2*dimension-2):
-            if isWinner(board, "+"):
+            if isWinner(board, player2Input):
                 print("player 1 is the winner!")
                 player1Wins +=1
                 i = dimension**2
-            elif isWinner(board, "o"):
+            elif isWinner(board, player1Input):
                 print("player 2 is the winner!")
                 player2Wins +=1
                 i = dimension**2
@@ -134,7 +136,7 @@ while(player1Wins < majority and player2Wins < majority):
         i+=1
 
     #Checks if it's a tie right at the end:
-    if((not(isWinner(board, "+")) and (not(isWinner(board, "o"))))):
+    if((not(isWinner(board, player2Input)) and (not(isWinner(board, player1Input))))):
         print("it's a tie!")
 
     displayScore(player1Wins, player2Wins)
@@ -154,6 +156,7 @@ print("Aaaand on a {}-{} decision......{} is the WINNER".format(player1Wins, pla
 #don't allow overwrites
 #call tie at the end
 #expand for n by n game
+#what characters?
 
 #possible features
 #what characters?
